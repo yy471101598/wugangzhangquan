@@ -43,6 +43,7 @@ import com.shoppay.szvipnewzh.bean.VipInfo;
 import com.shoppay.szvipnewzh.bean.VipInfoMsg;
 import com.shoppay.szvipnewzh.bean.VipPayMsg;
 import com.shoppay.szvipnewzh.card.ReadCardOpt;
+import com.shoppay.szvipnewzh.card.ReadCardOptHander;
 import com.shoppay.szvipnewzh.card.ReadCardOptTv;
 import com.shoppay.szvipnewzh.db.DBAdapter;
 import com.shoppay.szvipnewzh.http.InterfaceBack;
@@ -240,8 +241,19 @@ public class NumRechargeActivity extends Activity implements
     protected void onResume() {
         super.onResume();
         if (isVipcar) {
-            new ReadCardOptTv(tv_tvcard);
-            ontainVipInfo();
+            new ReadCardOptHander(new InterfaceBack() {
+                @Override
+                public void onResponse(Object response) {
+                    tv_tvcard.setText(response.toString());
+                    editString = tv_tvcard.getText().toString();
+                    ontainVipInfo();
+                }
+
+                @Override
+                public void onErrorResponse(Object msg) {
+
+                }
+            });
         } else {
             new ReadCardOpt(et_card);
         }
