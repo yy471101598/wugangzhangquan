@@ -44,7 +44,6 @@ import com.shoppay.szvipnewzh.bean.VipInfoMsg;
 import com.shoppay.szvipnewzh.bean.VipPayMsg;
 import com.shoppay.szvipnewzh.card.ReadCardOpt;
 import com.shoppay.szvipnewzh.card.ReadCardOptHander;
-import com.shoppay.szvipnewzh.card.ReadCardOptTv;
 import com.shoppay.szvipnewzh.db.DBAdapter;
 import com.shoppay.szvipnewzh.http.InterfaceBack;
 import com.shoppay.szvipnewzh.tools.BluetoothUtil;
@@ -263,7 +262,7 @@ public class NumRechargeActivity extends Activity implements
     protected void onStop() {
         try {
             if (isVipcar) {
-                new ReadCardOptTv().overReadCard();
+                new ReadCardOptHander().overReadCard();
             } else {
                 new ReadCardOpt().overReadCard();
             }

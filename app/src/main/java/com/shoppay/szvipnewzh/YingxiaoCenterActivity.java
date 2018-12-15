@@ -103,6 +103,7 @@ public class YingxiaoCenterActivity extends Activity {
         mBossTvEndtime.setText(getStringDate());
         obtainBoss();
     }
+
     public static String getStringDate() {
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -117,8 +118,8 @@ public class YingxiaoCenterActivity extends Activity {
         client.setCookieStore(myCookieStore);
         RequestParams map = new RequestParams();
 
-        map.put("StartDate",mBossTvStarttime.getText().toString());
-        map.put("EndDate",mBossTvEndtime.getText().toString());
+        map.put("StartDate", mBossTvStarttime.getText().toString());
+        map.put("EndDate", mBossTvEndtime.getText().toString());
         String url = UrlTools.obtainUrl(ac, "?Source=3", "RptOverallDataGet");
         LogUtils.d("xxurl", url);
         client.post(url, map, new AsyncHttpResponseHandler() {
@@ -130,11 +131,11 @@ public class YingxiaoCenterActivity extends Activity {
                     JSONObject jso = new JSONObject(new String(responseBody, "UTF-8"));
                     if (jso.getInt("flag") == 1) {
 //                        Toast.makeText(ac, jso.getString("msg"), Toast.LENGTH_LONG).show();
-                        Gson gson=new Gson();
+                        Gson gson = new Gson();
                         Type listType = new TypeToken<List<YinxiaoCenter>>() {
                         }.getType();
                         List<YinxiaoCenter> yinxiaoCenters = gson.fromJson(jso.getString("vdata"), listType);
-                         handlerYinxiaoMsg(yinxiaoCenters.get(0));
+                        handlerYinxiaoMsg(yinxiaoCenters.get(0));
 
                         JSONObject jsonObject = (JSONObject) jso.getJSONArray("print").get(0);
                         if (jsonObject.getInt("printNumber") == 0) {
@@ -167,7 +168,7 @@ public class YingxiaoCenterActivity extends Activity {
 
     private void handlerYinxiaoMsg(YinxiaoCenter yx) {
         mTvNewvip.setText(yx.getMemCount());
-        mTvYingshouheji.setText(CommonUtils.add(Double.parseDouble(yx.getRechSubtotal()),Double.parseDouble(yx.getOrderSubtotal()))+"");
+        mTvYingshouheji.setText(CommonUtils.add(Double.parseDouble(yx.getRechSubtotal()), Double.parseDouble(yx.getOrderSubtotal())) + "");
         mTvMoney.setText(yx.getRechCash());
         mTvQita.setText(yx.getRechOthePayment());
         mTvZengsong.setText(yx.getRechGiveMoney());

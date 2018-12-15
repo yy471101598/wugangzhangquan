@@ -39,7 +39,6 @@ import com.shoppay.szvipnewzh.bean.VipInfo;
 import com.shoppay.szvipnewzh.bean.VipInfoMsg;
 import com.shoppay.szvipnewzh.card.ReadCardOpt;
 import com.shoppay.szvipnewzh.card.ReadCardOptHander;
-import com.shoppay.szvipnewzh.card.ReadCardOptTv;
 import com.shoppay.szvipnewzh.db.DBAdapter;
 import com.shoppay.szvipnewzh.http.InterfaceBack;
 import com.shoppay.szvipnewzh.tools.ActivityStack;
@@ -493,7 +492,7 @@ public class JifenDuihuanActivity extends Activity {
     protected void onStop() {
         try {
             if (isVipcar) {
-                new ReadCardOptTv().overReadCard();
+                new ReadCardOptHander().overReadCard();
             } else {
                 new ReadCardOpt().overReadCard();
             }
