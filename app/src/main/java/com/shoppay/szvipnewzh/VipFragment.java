@@ -64,7 +64,7 @@ import static com.shoppay.szvipnewzh.tools.DialogUtil.money;
 
 public class VipFragment extends Fragment  {
     private EditText et_card, et_xfmoney, et_zfmoney, et_yuemoney, et_jfmoney;
-    private TextView tv_vipname, tv_vipjf, tv_zhmoney, tv_maxdk, tv_dkmoney, tv_obtainjf, tv_vipyue, tv_jiesuan, tv_vipdengji;
+    private TextView tv_vipname, tv_vipjf, tv_zhmoney, tv_maxdk, tv_dkmoney, tv_obtainjf, tv_vipyue, tv_jiesuan, tv_vipdengji,mVipTvKamcard;
     private RelativeLayout rl_jiesuan;
     private boolean isMoney = false, isYue = true, isZhifubao = false, isYinlian = false, isQita = false, isWx = false;
     private RelativeLayout rl_pay_money, rl_pay_yue, rl_pay_jifen, rl_pay_jifenmaxdk, rl_pay_jifendkm, rl_wx;
@@ -90,6 +90,7 @@ public class VipFragment extends Fragment  {
                     tv_vipyue.setText(info.getMemMoney());
                     tv_vipdengji.setText(info.getLevelName());
                     tv_vipjf.setText(info.getMemPoint());
+                    mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
                     PreferenceHelper.write(getActivity(), "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(getActivity(), "shoppay", "vipcar", et_card.getText().toString());
                     PreferenceHelper.write(getActivity(), "shoppay", "Discount", info.getDiscount());
@@ -103,6 +104,7 @@ public class VipFragment extends Fragment  {
                     tv_vipjf.setText("");
                     tv_vipyue.setText("");
                     tv_vipdengji.setText("");
+                    mVipTvKamcard.setText("");
                     break;
 
 
@@ -455,6 +457,7 @@ public class VipFragment extends Fragment  {
         et_xfmoney = (EditText) view.findViewById(R.id.vip_et_xfmoney);
         et_zfmoney = (EditText) view.findViewById(R.id.vip_et_money);
         mRadiogroup = (RadioGroup) view.findViewById(R.id.radiogroup);
+        mVipTvKamcard=view.findViewById(R.id.vip_tv_kamcard);
         et_yuemoney = (EditText) view.findViewById(R.id.vip_et_yue);
         et_password = (EditText) view.findViewById(R.id.vip_et_password);
         et_jfmoney = (EditText) view.findViewById(R.id.vip_et_jifen);

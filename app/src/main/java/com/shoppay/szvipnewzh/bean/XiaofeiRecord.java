@@ -27,7 +27,7 @@ public class XiaofeiRecord {
     private String OrderTotalMoney;
     private String OrderDiscountMoney;
     private String OrderCreateTime;
-
+    public String MemCardNumber;
     public String getOrderAccount() {
         return OrderAccount;
     }

@@ -94,6 +94,8 @@ public class VipQiandaoActivity extends Activity {
     RelativeLayout rl_card;
     @Bind(R.id.tv_tvcard)
     TextView tv_tvcard;
+    @Bind(R.id.vip_tv_kamcard)
+    TextView mVipTvKamcard;
     private boolean isVipcar = false;
     private SystemQuanxian sysquanxian;
     private MyApplication app;
@@ -113,6 +115,7 @@ public class VipQiandaoActivity extends Activity {
                     vipTvVipyue.setText(info.getMemMoney());
                     vipTvJifen.setText(info.getMemPoint());
                     vipTvVipdengji.setText(info.getLevelName());
+                    mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", vipEtCard.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "Discount", info.getDiscount());
@@ -127,6 +130,7 @@ public class VipQiandaoActivity extends Activity {
                     vipTvVipdengji.setText("");
                     vipTvJifen.setText("");
                     vipTvVipyue.setText("");
+                    mVipTvKamcard.setText("");
                     isSuccess = false;
                     PreferenceHelper.write(ac, "shoppay", "memid", "123");
                     PreferenceHelper.write(ac, "shoppay", "vipcar", "123");
@@ -148,8 +152,8 @@ public class VipQiandaoActivity extends Activity {
         PreferenceHelper.write(MyApplication.context, "shoppay", "viptoast", "未查询到会员");
         ActivityStack.create().addActivity(VipQiandaoActivity.this);
 //        obtainVipRecharge();
-        app= (MyApplication) getApplication();
-        sysquanxian=app.getSysquanxian();
+        app = (MyApplication) getApplication();
+        sysquanxian = app.getSysquanxian();
         if (Integer.parseInt(NullUtils.noNullHandle(sysquanxian.isvipcard).toString()) == 0) {
             rl_tvcard.setVisibility(View.GONE);
             rl_card.setVisibility(View.VISIBLE);
@@ -214,10 +218,10 @@ public class VipQiandaoActivity extends Activity {
         final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
         client.setCookieStore(myCookieStore);
         RequestParams map = new RequestParams();
-        map.put("MemID",  PreferenceHelper.readString(ac,"shoppay","memid",""));
-        LogUtils.d("xxparams",map.toString());
-        String url=UrlTools.obtainUrl(ac,"?Source=3","MemSign");
-        LogUtils.d("xxurl",url);
+        map.put("MemID", PreferenceHelper.readString(ac, "shoppay", "memid", ""));
+        LogUtils.d("xxparams", map.toString());
+        String url = UrlTools.obtainUrl(ac, "?Source=3", "MemSign");
+        LogUtils.d("xxurl", url);
         client.post(url, map, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -225,22 +229,23 @@ public class VipQiandaoActivity extends Activity {
                     dialog.dismiss();
                     LogUtils.d("xxvipqiandaoS", new String(responseBody, "UTF-8"));
                     JSONObject jso = new JSONObject(new String(responseBody, "UTF-8"));
-                    if(jso.getInt("flag")==1){
-                        Gson gson=new Gson();
-                        Type listType = new TypeToken<List<VipQiandaoRecord>>(){}.getType();
+                    if (jso.getInt("flag") == 1) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<VipQiandaoRecord>>() {
+                        }.getType();
                         List<VipQiandaoRecord> qiandaolist = gson.fromJson(jso.getString("vdata"), listType);
                         Toast.makeText(ac, jso.getString("msg"), Toast.LENGTH_LONG).show();
-                        list.add(1,qiandaolist.get(0));
+                        list.add(1, qiandaolist.get(0));
                         adapter.notifyDataSetChanged();
-                        JSONObject jsonObject=(JSONObject) jso.getJSONArray("print").get(0);
-                        if(jsonObject.getInt("printNumber")==0){
+                        JSONObject jsonObject = (JSONObject) jso.getJSONArray("print").get(0);
+                        if (jsonObject.getInt("printNumber") == 0) {
 
-                        }else{
-                            BluetoothAdapter bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
-                            if(bluetoothAdapter.isEnabled()) {
+                        } else {
+                            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                            if (bluetoothAdapter.isEnabled()) {
                                 BluetoothUtil.connectBlueTooth(MyApplication.context);
-                                BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")),jsonObject.getInt("printNumber"));
-                            }else {
+                                BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")), jsonObject.getInt("printNumber"));
+                            } else {
                             }
                         }
                     } else {
@@ -268,8 +273,8 @@ public class VipQiandaoActivity extends Activity {
         final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
         client.setCookieStore(myCookieStore);
         RequestParams map = new RequestParams();
-        String url=UrlTools.obtainUrl(ac,"?Source=3","GetMemSignList");
-        LogUtils.d("xxurl",url);
+        String url = UrlTools.obtainUrl(ac, "?Source=3", "GetMemSignList");
+        LogUtils.d("xxurl", url);
         client.post(url, map, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -277,23 +282,24 @@ public class VipQiandaoActivity extends Activity {
                     dialog.dismiss();
                     LogUtils.d("xxvipqiandaoRecordS", new String(responseBody, "UTF-8"));
                     JSONObject jso = new JSONObject(new String(responseBody, "UTF-8"));
-                    if(jso.getInt("flag")==1){
+                    if (jso.getInt("flag") == 1) {
                         Gson gson = new Gson();
-                        Type listType = new TypeToken<List<VipQiandaoRecord>>(){}.getType();
-                            list = gson.fromJson(jso.getString("vdata"), listType);
-                            VipQiandaoRecord vipQiandaoRecord = new VipQiandaoRecord();
-                            list.add(0, vipQiandaoRecord);
-                            adapter = new VipQiandaoRecordAdapter(ac, list);
-                            listview.setAdapter(adapter);
-                        JSONObject jsonObject=(JSONObject) jso.getJSONArray("print").get(0);
-                        if(jsonObject.getInt("printNumber")==0){
+                        Type listType = new TypeToken<List<VipQiandaoRecord>>() {
+                        }.getType();
+                        list = gson.fromJson(jso.getString("vdata"), listType);
+                        VipQiandaoRecord vipQiandaoRecord = new VipQiandaoRecord();
+                        list.add(0, vipQiandaoRecord);
+                        adapter = new VipQiandaoRecordAdapter(ac, list);
+                        listview.setAdapter(adapter);
+                        JSONObject jsonObject = (JSONObject) jso.getJSONArray("print").get(0);
+                        if (jsonObject.getInt("printNumber") == 0) {
 
-                        }else{
-                            BluetoothAdapter bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
-                            if(bluetoothAdapter.isEnabled()) {
+                        } else {
+                            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                            if (bluetoothAdapter.isEnabled()) {
                                 BluetoothUtil.connectBlueTooth(MyApplication.context);
-                                BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")),jsonObject.getInt("printNumber"));
-                            }else {
+                                BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")), jsonObject.getInt("printNumber"));
+                            } else {
                             }
                         }
                     } else {
@@ -395,16 +401,13 @@ public class VipQiandaoActivity extends Activity {
 
     @Override
     protected void onStop() {
-        try
-        {
+        try {
             if (isVipcar) {
                 new ReadCardOptHander().overReadCard();
             } else {
                 new ReadCardOpt().overReadCard();
             }
-        }
-        catch (RemoteException e)
-        {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
         super.onStop();

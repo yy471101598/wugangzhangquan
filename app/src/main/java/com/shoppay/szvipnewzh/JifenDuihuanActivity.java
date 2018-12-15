@@ -138,6 +138,8 @@ public class JifenDuihuanActivity extends Activity {
     RelativeLayout rl_card;
     @Bind(R.id.tv_tvcard)
     TextView tv_tvcard;
+    @Bind(R.id.vip_tv_kamcard)
+    TextView mVipTvKamcard;
     private boolean isVipcar = false;
     private SystemQuanxian sysquanxian;
     private MyApplication app;
@@ -162,6 +164,7 @@ public class JifenDuihuanActivity extends Activity {
                     vipTvVipyue.setText(info.getMemMoney());
                     vipTvJifen.setText(info.getMemPoint());
                     vipTvVipdengji.setText(info.getLevelName());
+                    mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", vipEtCard.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "Discount", info.getDiscount());
@@ -174,6 +177,7 @@ public class JifenDuihuanActivity extends Activity {
                     vipTvVipdengji.setText("");
                     vipTvJifen.setText("");
                     vipTvVipyue.setText("");
+                    mVipTvKamcard.setText("");
                     isSuccess = false;
                     PreferenceHelper.write(ac, "shoppay", "memid", "123");
                     PreferenceHelper.write(ac, "shoppay", "vipcar", "123");

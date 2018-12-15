@@ -99,6 +99,8 @@ public class VipChaxunActivity extends Activity {
     RelativeLayout rl_card;
     @Bind(R.id.tv_tvcard)
     TextView tv_tvcard;
+    @Bind(R.id.vip_tv_kamcard)
+    TextView mVipTvKamcard;
     private boolean isVipcar = false;
     private SystemQuanxian sysquanxian;
     private MyApplication app;
@@ -123,6 +125,7 @@ public class VipChaxunActivity extends Activity {
                     vipTvCreatetime.setText(info.getMemCreateTime());
                     vipTvState.setText(info.getState());
                     vipTvGuoqitime.setText(info.getPastTime());
+                    mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
                     vipTvXiaofei.setText(StringUtil.twoNum(info.getMemConsumeMoney()));
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", vipEtCard.getText().toString());
@@ -144,6 +147,7 @@ public class VipChaxunActivity extends Activity {
                     vipTvState.setText("");
                     vipTvGuoqitime.setText("");
                     vipTvXiaofei.setText("");
+                    mVipTvKamcard.setText("");
                     isSuccess = false;
                     PreferenceHelper.write(ac, "shoppay", "memid", "123");
                     PreferenceHelper.write(ac, "shoppay", "vipcar", "123");
@@ -164,8 +168,8 @@ public class VipChaxunActivity extends Activity {
         PreferenceHelper.write(MyApplication.context, "shoppay", "viptoast", "未查询到会员");
         ActivityStack.create().addActivity(VipChaxunActivity.this);
 //        obtainVipRecharge();
-        app= (MyApplication) getApplication();
-        sysquanxian=app.getSysquanxian();
+        app = (MyApplication) getApplication();
+        sysquanxian = app.getSysquanxian();
         if (Integer.parseInt(NullUtils.noNullHandle(sysquanxian.isvipcard).toString()) == 0) {
             rl_tvcard.setVisibility(View.GONE);
             rl_card.setVisibility(View.VISIBLE);
@@ -302,16 +306,13 @@ public class VipChaxunActivity extends Activity {
 
     @Override
     protected void onStop() {
-        try
-        {
+        try {
             if (isVipcar) {
                 new ReadCardOptHander().overReadCard();
             } else {
                 new ReadCardOpt().overReadCard();
             }
-        }
-        catch (RemoteException e)
-        {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
         super.onStop();

@@ -20,7 +20,7 @@ public class DuihuanRecord {
     private String MemName;
     private String ExchangeAllPoint;
     private String ExchangeTime;
-
+    public String MemCardNumber;
     public String getExchangeAccount() {
         return ExchangeAccount;
     }

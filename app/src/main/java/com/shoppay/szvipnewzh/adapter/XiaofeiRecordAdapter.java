@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.shoppay.szvipnewzh.R;
 import com.shoppay.szvipnewzh.bean.XiaofeiRecord;
 import com.shoppay.szvipnewzh.tools.LogUtils;
+import com.shoppay.szvipnewzh.tools.NullUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +63,12 @@ public class XiaofeiRecordAdapter extends BaseAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
         final XiaofeiRecord home = list.get(position);
-        LogUtils.d("xxx",home.getMemCard());
-         vh.mTvCode.setText(home.getOrderAccount());
+        LogUtils.d("xxx", home.getMemCard());
+        vh.mTvCode.setText(home.getOrderAccount());
         vh.mTvVipcard.setText(home.getMemCard());
         vh.mTvVipname.setText(home.getMemName());
         vh.mTvZhmoney.setText(home.getOrderDiscountMoney());
+        vh.tv_kamcard.setText(NullUtils.noNullHandle(home.MemCardNumber).toString());
 //        OrderStatus=订单状态 1:完成 2：撤销 3：挂单
 //        String orderstate="";
 //        switch (home.getor)
@@ -105,6 +107,8 @@ public class XiaofeiRecordAdapter extends BaseAdapter {
         TextView mTvZhmoney;
         @Bind(R.id.tv_detail)
         TextView mTvDetail;
+        @Bind(R.id.vip_tv_kamcard)
+        TextView tv_kamcard;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

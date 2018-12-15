@@ -66,7 +66,7 @@ import cz.msebera.android.httpclient.Header;
 public class VipRechargeActivity extends Activity implements View.OnClickListener {
     private RelativeLayout rl_left, rl_rechage;
     private EditText et_vipcard, et_money;
-    private TextView tv_title, tv_vipname, tv_vipyue, tv_jifen, tv_dengji;
+    private TextView tv_title, tv_vipname, tv_vipyue, tv_jifen, tv_dengji,mVipTvKamcard;
     private MyGridViews myGridViews;
     private Activity ac;
     private String state = "现金";
@@ -90,6 +90,7 @@ public class VipRechargeActivity extends Activity implements View.OnClickListene
                     tv_vipyue.setText(info.getMemMoney());
                     tv_jifen.setText(info.getMemPoint());
                     tv_dengji.setText(info.getLevelName());
+                    mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", et_vipcard.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "Discount", info.getDiscount());
@@ -102,6 +103,7 @@ public class VipRechargeActivity extends Activity implements View.OnClickListene
                     tv_vipyue.setText("");
                     tv_jifen.setText("");
                     tv_dengji.setText("");
+                    mVipTvKamcard.setText("");
                     isSuccess = false;
                     PreferenceHelper.write(ac, "shoppay", "memid", "123");
                     PreferenceHelper.write(ac, "shoppay", "vipcar", "123");
@@ -274,6 +276,7 @@ public class VipRechargeActivity extends Activity implements View.OnClickListene
         tv_jifen = (TextView) findViewById(R.id.viprecharge_et_jifen);
         tv_dengji = (TextView) findViewById(R.id.viprecharge_et_dengji);
         myGridViews = (MyGridViews) findViewById(R.id.gridview);
+        mVipTvKamcard=findViewById(R.id.vip_tv_kamcard);
         mRadiogroup = (RadioGroup) findViewById(R.id.radiogroup);
         tv_title.setText("会员充值");
         rl_right = (RelativeLayout) findViewById(R.id.rl_right);

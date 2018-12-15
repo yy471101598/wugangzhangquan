@@ -79,7 +79,7 @@ public class NumRechargeActivity extends Activity implements
 
     private ListView listView;
     private RelativeLayout rl_jiesuan, rl_left, rl_right;
-    private TextView tv_num, tv_money, tv_jifen, tv_title, tv_vipname, tv_vipjifen, tv_vipyue, tv_vipdengji;
+    private TextView tv_num, tv_money, tv_jifen, tv_title, tv_vipname, tv_vipjifen, tv_vipyue, tv_vipdengji,mVipTvKamcard;
     private EditText et_card;
     private Dialog dialog;
     private Dialog paydialog;
@@ -104,6 +104,7 @@ public class NumRechargeActivity extends Activity implements
                     tv_vipjifen.setText(info.getMemPoint());
                     tv_vipyue.setText(info.getMemMoney());
                     tv_vipdengji.setText(info.getLevelName());
+                    mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", et_card.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "vipname", tv_vipname.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
@@ -118,6 +119,7 @@ public class NumRechargeActivity extends Activity implements
                     tv_vipjifen.setText("");
                     tv_vipyue.setText("");
                     tv_vipdengji.setText("");
+                    mVipTvKamcard.setText("");
                     PreferenceHelper.write(ac, "shoppay", "isSuccess", false);
                     if (et_card.getText().toString().equals("") || et_card.getText().toString() == null) {
                         PreferenceHelper.write(ac, "shoppay", "isInput", false);
@@ -353,6 +355,7 @@ public class NumRechargeActivity extends Activity implements
         tv_tvcard = findViewById(R.id.tv_tvcard);
         rl_tvcard=findViewById(R.id.rl_tvcard);
         rl_card = findViewById(R.id.numrecharge_rl_card);
+        mVipTvKamcard=findViewById(R.id.vip_tv_kamcard);
         tv_jifen = (TextView) findViewById(R.id.numrecharge_tv_jifen);
         tv_vipjifen = (TextView) findViewById(R.id.numrecharge_tv_vipjifen);
         tv_vipyue = (TextView) findViewById(R.id.numrecharge_tv_vipyue);

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.shoppay.szvipnewzh.R;
 import com.shoppay.szvipnewzh.bean.DuihuanRecord;
 import com.shoppay.szvipnewzh.tools.LogUtils;
+import com.shoppay.szvipnewzh.tools.NullUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +63,12 @@ public class DuihuanRecordAdapter extends BaseAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
         final DuihuanRecord home = list.get(position);
-        LogUtils.d("xxx",home.getMemCard());
+        LogUtils.d("xxx", home.getMemCard());
         vh.mTvVipcard.setText(home.getMemCard());
         vh.mTvJifen.setText(home.getExchangeAllPoint());
         vh.mTvTime.setText(home.getExchangeTime());
+        vh.tv_kamcard.setText(NullUtils.noNullHandle(home.MemCardNumber).toString());
+
         return convertView;
     }
 
@@ -79,6 +82,8 @@ public class DuihuanRecordAdapter extends BaseAdapter {
         TextView mTvJifen;
         @Bind(R.id.tv_time)
         TextView mTvTime;
+        @Bind(R.id.vip_tv_kamcard)
+        TextView tv_kamcard;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

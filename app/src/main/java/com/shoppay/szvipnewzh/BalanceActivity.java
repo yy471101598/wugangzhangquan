@@ -94,7 +94,7 @@ public class BalanceActivity extends FragmentActivity implements
     private BalanceFragment myFragment;
     public static int mPosition;
     private RelativeLayout rl_yes, rl_no, rl_card, rl_jiesuan, rl_left, rl_vipname, rl_vipjifen, rl_vipyue, rl_vipdengji;
-    private TextView tv_yes, tv_no, tv_num, tv_money, tv_jifen, tv_title, tv_vipname, tv_vipjifen, tv_vipyue, tv_vipdengji;
+    private TextView tv_yes, tv_no, tv_num, tv_money, tv_jifen, tv_title, tv_vipname, tv_vipjifen, tv_vipyue, tv_vipdengji,mVipTvKamcard;
     private LinearLayout li_jifen;
     private EditText et_card;
     private String type = "否";
@@ -122,6 +122,7 @@ public class BalanceActivity extends FragmentActivity implements
                     tv_vipjifen.setText(info.getMemPoint());
                     tv_vipyue.setText(info.getMemMoney());
                     tv_vipdengji.setText(info.getLevelName());
+                    mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", et_card.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "vipname", tv_vipname.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
@@ -134,6 +135,7 @@ public class BalanceActivity extends FragmentActivity implements
                     tv_vipjifen.setText("");
                     tv_vipyue.setText("");
                     tv_vipdengji.setText("");
+                    mVipTvKamcard.setText("");
                     isSuccess = false;
                     break;
                 case 3:
@@ -464,7 +466,7 @@ public class BalanceActivity extends FragmentActivity implements
         rl_jiesuan = (RelativeLayout) findViewById(R.id.balance_rl_jiesan);
         rl_vipyue = (RelativeLayout) findViewById(R.id.balance_rl_vipyue);
         rl_vipdengji = (RelativeLayout) findViewById(R.id.balance_rl_vipdengji);
-
+        mVipTvKamcard=findViewById(R.id.vip_tv_kamcard);
         li_vip = findViewById(R.id.li_vip);
 
         rl_tvcard = findViewById(R.id.rl_tvcard);
