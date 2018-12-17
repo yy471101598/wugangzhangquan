@@ -99,6 +99,7 @@ public class VipCardActivity extends Activity implements View.OnClickListener {
     private RelativeLayout rl_tvcard, rl_card;
     private TextView tv_tvcard;
     private boolean isVipcar = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -277,8 +278,7 @@ public class VipCardActivity extends Activity implements View.OnClickListener {
         rl_save.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
-                if (et_vipcard.getText().toString().equals("")
-                        || et_vipcard.getText().toString() == null) {
+                if (et_vipcard.getText().toString().equals("") && tv_tvcard.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "请输入会员卡号",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -295,12 +295,10 @@ public class VipCardActivity extends Activity implements View.OnClickListener {
                 else if (tv_vipdj.getText().toString().equals("请选择")) {
                     Toast.makeText(getApplicationContext(), "请选择会员等级",
                             Toast.LENGTH_SHORT).show();
-                }
-                else if (!et_tjcard.getText().toString().equals("")&&tjrmemId.equals("")) {
+                } else if (!et_tjcard.getText().toString().equals("") && tjrmemId.equals("")) {
                     Toast.makeText(getApplicationContext(), "请输入正确的推荐人卡号",
                             Toast.LENGTH_SHORT).show();
-                }
-                else if (ispassword) {
+                } else if (ispassword) {
                     if (et_password.getText().toString() == null || et_password.getText().toString().equals("")) {
                         Toast.makeText(getApplicationContext(), "请输入会员卡密码",
                                 Toast.LENGTH_SHORT).show();
@@ -443,7 +441,7 @@ public class VipCardActivity extends Activity implements View.OnClickListener {
         final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
         client.setCookieStore(myCookieStore);
         RequestParams map = new RequestParams();
-        map.put("MemCard", et_vipcard.getText().toString());//会员卡号
+        map.put("MemCard", et_vipcard.getText().toString().equals("") ? tv_tvcard.getText().toString() : et_vipcard.getText().toString());//会员卡号
 //        map.put("memName", et_vipname.getText().toString());//会员姓名
         if (state.equals("男")) {
             map.put("MemSex", "男");
@@ -527,7 +525,6 @@ public class VipCardActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        new ReadCardOpt(et_vipcard);
         if (isVipcar) {
             new ReadCardOptTv(tv_tvcard);
         } else {
