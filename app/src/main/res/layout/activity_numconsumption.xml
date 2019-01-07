@@ -1,55 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroudcolor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backgroudcolor"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
     >
+
     <RelativeLayout
         android:id="@+id/num_rl_down"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         >
+
         <TextView
             android:id="@+id/num_tv_n"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/text_30"
-            android:text="消费总次："
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:text="消费总次："
+            android:textColor="@color/text_30"
+            android:textSize="15sp"
             />
+
         <TextView
             android:id="@+id/num_tv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:layout_toRightOf="@+id/num_tv_n"
-            android:textColor="@color/theme_red"
-            android:text="0"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/num_tv_n"
+            android:text="0"
+            android:textColor="@color/theme_red"
+            android:textSize="15sp"
             />
+
         <RelativeLayout
             android:id="@+id/num_rl_jiesan"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
-            android:background="@color/theme_red"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="8dp"
+            android:background="@color/theme_red"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-                android:text="结算"
                 android:layout_centerInParent="true"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:text="结算"
+                android:textColor="@color/white"
+                android:textSize="15sp"
                 />
         </RelativeLayout>
     </RelativeLayout>
@@ -57,48 +65,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginBottom="50dp"
+        android:orientation="vertical"
         >
-<include  layout="@layout/title_twoicon_back"></include>
-    <RelativeLayout
-        android:id="@+id/rl_etcard"
-        android:layout_width="match_parent"
-        android:layout_height="40.5dp"
-        android:background="@color/white"
-        >
-        <TextView
-            android:id="@+id/num_tv_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/text_30"
-            android:text="会员卡号"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            />
-        <EditText
-            android:id="@+id/num_et_card"
+
+        <include layout="@layout/title_twoicon_back"></include>
+
+        <RelativeLayout
+            android:id="@+id/rl_etcard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/text_30"
-            android:textColorHint="@color/text_66"
-            android:layout_toRightOf="@id/num_tv_card"
-            android:textSize="15sp"
-            android:background="@null"
-            android:gravity="center_vertical|right"
-            android:hint="请输入会员卡号"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/viewcolor"
-            android:layout_alignParentBottom="true"
-            ></View>
-    </RelativeLayout>
+            android:layout_height="40.5dp"
+            android:background="@color/white"
+            >
+
+            <TextView
+                android:id="@+id/num_tv_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="会员卡号"
+                android:textColor="@color/text_30"
+                android:textSize="15sp"
+                />
+
+            <EditText
+                android:id="@+id/num_et_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/num_tv_card"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="请输入会员卡号"
+                android:textColor="@color/text_30"
+                android:textColorHint="@color/text_66"
+                android:textSize="15sp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/viewcolor"
+                ></View>
+        </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/rl_tvcard"
             android:layout_width="match_parent"
@@ -135,6 +149,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/viewcolor"></View>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40.5dp"
@@ -161,45 +176,49 @@
                 android:textColor="@color/text_30"
                 android:textSize="15sp"
                 />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/viewcolor"
                 android:layout_alignParentBottom="true"
+                android:background="@color/viewcolor"
                 ></View>
         </RelativeLayout>
-        <RelativeLayout
-        android:id="@+id/num_rl_vipname"
-        android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:background="@color/white"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/text_30"
-            android:text="会员姓名"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            />
-        <TextView
-            android:id="@+id/num_tv_vipname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/text_30"
-            android:textSize="15sp"
-            />
 
-        <View
+        <RelativeLayout
+            android:id="@+id/num_rl_vipname"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/viewcolor"></View>
-    </RelativeLayout>
+            android:layout_height="41dp"
+            android:background="@color/white"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="会员姓名"
+                android:textColor="@color/text_30"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/num_tv_vipname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/text_30"
+                android:textSize="15sp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/viewcolor"></View>
+        </RelativeLayout>
 
 
         <RelativeLayout
@@ -207,102 +226,114 @@
             android:layout_height="40dp"
             android:background="@color/white"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/text_30"
-                android:text="会员积分"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
+                android:text="会员积分"
+                android:textColor="@color/text_30"
+                android:textSize="15sp"
                 />
+
             <TextView
                 android:id="@+id/vip_tv_jifen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="@null"
-                android:textColor="@color/text_30"
                 android:gravity="center_vertical|right"
+                android:textColor="@color/text_30"
                 android:textSize="15sp"
                 />
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/viewcolor"></View>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/text_30"
-                android:text="会员余额"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
+                android:text="会员余额"
+                android:textColor="@color/text_30"
+                android:textSize="15sp"
                 />
+
             <TextView
                 android:id="@+id/vip_tv_vipyue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="@null"
-                android:textColor="@color/text_30"
                 android:gravity="center_vertical|right"
+                android:textColor="@color/text_30"
                 android:textSize="15sp"
                 />
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/viewcolor"></View>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/text_30"
-                android:text="会员等级"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
+                android:text="会员等级"
+                android:textColor="@color/text_30"
+                android:textSize="15sp"
                 />
+
             <TextView
                 android:id="@+id/vip_tv_vipdengji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="@null"
-                android:textColor="@color/text_30"
                 android:gravity="center_vertical|right"
+                android:textColor="@color/text_30"
                 android:textSize="15sp"
                 />
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/viewcolor"></View>
+
         <ListView
             android:id="@+id/num_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
             android:cacheColorHint="#00000000"
-            android:dividerHeight="0.5dp"
             android:divider="@color/viewcolor"
+            android:dividerHeight="0.5dp"
+            android:scrollbars="none"
             android:visibility="gone"
             ></ListView>
     </LinearLayout>

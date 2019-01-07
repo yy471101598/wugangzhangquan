@@ -127,6 +127,15 @@ public class VipChaxunActivity extends Activity {
                     vipTvGuoqitime.setText(info.getPastTime());
                     mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
                     vipTvXiaofei.setText(StringUtil.twoNum(info.getMemConsumeMoney()));
+                    try {
+                        if (isVipcar) {
+                            new ReadCardOptHander().overReadCard();
+                        } else {
+                            new ReadCardOpt().overReadCard();
+                        }
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", vipEtCard.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "Discount", info.getDiscount());

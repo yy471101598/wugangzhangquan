@@ -108,6 +108,15 @@ public class NumConsumptionActivity extends Activity implements View.OnClickList
                     vipTvJifen.setText(info.getMemPoint());
                     vipTvVipdengji.setText(info.getLevelName());
                     mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
+                    try {
+                        if (isVipcar) {
+                            new ReadCardOptHander().overReadCard();
+                        } else {
+                            new ReadCardOpt().overReadCard();
+                        }
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", et_vipcard.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "Discount", info.getDiscount());

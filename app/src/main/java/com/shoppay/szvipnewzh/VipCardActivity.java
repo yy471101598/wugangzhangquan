@@ -29,8 +29,7 @@ import com.shoppay.szvipnewzh.bean.Dengji;
 import com.shoppay.szvipnewzh.bean.SystemQuanxian;
 import com.shoppay.szvipnewzh.bean.VipInfo;
 import com.shoppay.szvipnewzh.bean.VipInfoMsg;
-import com.shoppay.szvipnewzh.card.ReadCardOpt;
-import com.shoppay.szvipnewzh.card.ReadCardOptTv;
+import com.shoppay.szvipnewzh.card.ReadCardOptHander;
 import com.shoppay.szvipnewzh.http.InterfaceBack;
 import com.shoppay.szvipnewzh.tools.ActivityStack;
 import com.shoppay.szvipnewzh.tools.BluetoothUtil;
@@ -526,9 +525,39 @@ public class VipCardActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         if (isVipcar) {
-            new ReadCardOptTv(tv_tvcard);
+            new ReadCardOptHander(new InterfaceBack() {
+                @Override
+                public void onResponse(Object response) {
+                    tv_tvcard.setText(response.toString());
+                    try {
+                        new ReadCardOptHander().overReadCard();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(Object msg) {
+
+                }
+            });
         } else {
-            new ReadCardOpt(et_vipcard);
+            new ReadCardOptHander(new InterfaceBack() {
+                @Override
+                public void onResponse(Object response) {
+                    et_vipcard.setText(response.toString());
+                    try {
+                        new ReadCardOptHander().overReadCard();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(Object msg) {
+
+                }
+            });
         }
     }
 
@@ -536,9 +565,9 @@ public class VipCardActivity extends Activity implements View.OnClickListener {
     protected void onStop() {
         try {
             if (isVipcar) {
-                new ReadCardOptTv().overReadCard();
+                new ReadCardOptHander().overReadCard();
             } else {
-                new ReadCardOpt().overReadCard();
+                new ReadCardOptHander().overReadCard();
             }
         } catch (RemoteException e) {
             e.printStackTrace();

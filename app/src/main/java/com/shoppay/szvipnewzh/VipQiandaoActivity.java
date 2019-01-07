@@ -116,6 +116,15 @@ public class VipQiandaoActivity extends Activity {
                     vipTvJifen.setText(info.getMemPoint());
                     vipTvVipdengji.setText(info.getLevelName());
                     mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
+                    try {
+                        if (isVipcar) {
+                            new ReadCardOptHander().overReadCard();
+                        } else {
+                            new ReadCardOpt().overReadCard();
+                        }
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", vipEtCard.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "Discount", info.getDiscount());

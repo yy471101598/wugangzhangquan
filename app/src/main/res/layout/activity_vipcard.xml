@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroudcolor"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/backgroudcolor"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
 
     <include layout="@layout/title_twoicon_back"></include>
 
@@ -21,7 +23,7 @@
             android:layout_marginLeft="3dp"
             android:text="*"
             android:textColor="@color/theme_red"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/vipcard_tv_cardnum"
@@ -31,7 +33,7 @@
             android:layout_marginLeft="10dp"
             android:text="会员卡号"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <EditText
             android:id="@+id/vipcard_et_cardnum"
@@ -46,12 +48,13 @@
             android:hint="请输入会员卡号"
             android:textColor="@color/text_30"
             android:textColorHint="@color/text_66"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/viewcolor"
             android:layout_alignParentBottom="true"
+            android:background="@color/viewcolor"
             ></View>
     </RelativeLayout>
 
@@ -62,6 +65,7 @@
         android:background="@color/white"
         android:visibility="gone"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +73,8 @@
             android:layout_marginLeft="3dp"
             android:text="*"
             android:textColor="@color/theme_red"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,6 +103,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/viewcolor"></View>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -110,7 +116,7 @@
             android:layout_marginLeft="10dp"
             android:text="卡面号码"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <EditText
             android:id="@+id/vipcard_et_kmnum"
@@ -124,7 +130,7 @@
             android:hint="请输入卡面号码"
             android:textColor="@color/text_30"
             android:textColorHint="@color/text_66"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <View
@@ -145,7 +151,7 @@
             android:text="*"
             android:textColor="@color/theme_red"
             android:textSize="15sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -154,7 +160,7 @@
             android:layout_marginLeft="10dp"
             android:text="会员姓名"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <EditText
             android:id="@+id/vipcard_et_vipname"
@@ -168,7 +174,7 @@
             android:hint="请输入会员姓名"
             android:textColor="@color/text_30"
             android:textColorHint="@color/text_66"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <View
@@ -189,7 +195,7 @@
             android:text="*"
             android:textColor="@color/theme_red"
             android:textSize="15sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -198,7 +204,7 @@
             android:layout_marginLeft="10dp"
             android:text="会员性别"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -228,7 +234,7 @@
                     android:paddingBottom="3dp"
                     android:text="男"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -248,7 +254,7 @@
                     android:paddingBottom="3dp"
                     android:text="女"
                     android:textColor="@color/text_30"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"/>
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
@@ -270,7 +276,7 @@
             android:layout_marginLeft="10dp"
             android:text="会员生日"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/vipcard_tv_vipsr"
@@ -281,7 +287,7 @@
             android:layout_marginRight="10dp"
             android:text="年-月-日"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <View
@@ -302,7 +308,7 @@
             android:text="*"
             android:textColor="@color/theme_red"
             android:textSize="15sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -311,7 +317,7 @@
             android:layout_marginLeft="10dp"
             android:text="手机号码"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <EditText
             android:id="@+id/vipcard_et_phone"
@@ -325,7 +331,7 @@
             android:hint="请输入手机号码"
             android:textColor="@color/text_30"
             android:textColorHint="@color/text_66"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <View
@@ -345,7 +351,7 @@
             android:layout_marginLeft="3dp"
             android:text="*"
             android:textColor="@color/theme_red"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -354,7 +360,7 @@
             android:layout_marginLeft="10dp"
             android:text="会员等级"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <RelativeLayout
             android:id="@+id/vipcard_rl_chose"
@@ -372,14 +378,14 @@
                 android:layout_marginRight="20dp"
                 android:text="请选择"
                 android:textColor="@color/text_30"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
 
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/next_button" />
+                android:background="@drawable/next_button"/>
         </RelativeLayout>
     </RelativeLayout>
 
@@ -402,7 +408,7 @@
             android:text="*"
             android:textColor="@color/theme_red"
             android:textSize="15sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -411,7 +417,7 @@
             android:layout_marginLeft="10dp"
             android:text="会员密码"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <EditText
             android:id="@+id/vipcard_et_password"
@@ -425,7 +431,7 @@
             android:hint="请输入会员密码"
             android:textColor="@color/text_30"
             android:textColorHint="@color/text_66"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
 
@@ -446,7 +452,7 @@
             android:layout_marginLeft="10dp"
             android:text="推荐人号"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <RelativeLayout
             android:id="@+id/rl_tjr_cx"
@@ -467,7 +473,7 @@
                 android:paddingBottom="3dp"
                 android:text="查找"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </RelativeLayout>
 
         <EditText
@@ -475,15 +481,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/rl_tjr_cx"
             android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/rl_tjr_cx"
             android:background="@null"
             android:gravity="center_vertical|right"
             android:hint="请输入推荐人卡号"
             android:inputType="number"
             android:textColor="@color/text_30"
             android:textColorHint="@color/text_66"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <View
@@ -503,7 +509,8 @@
             android:layout_marginLeft="10dp"
             android:text="推荐人名"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
+
         <RelativeLayout
             android:id="@+id/rl_tjr_clear"
             android:layout_width="wrap_content"
@@ -523,19 +530,20 @@
                 android:paddingBottom="3dp"
                 android:text="清除"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </RelativeLayout>
+
         <TextView
             android:id="@+id/vipcard_tv_tjname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/rl_tjr_clear"
             android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/rl_tjr_clear"
             android:background="@null"
             android:gravity="center_vertical|right"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <View
@@ -557,7 +565,7 @@
             android:layout_marginLeft="10dp"
             android:text="过期时间"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/vipcard_tv_endtime"
@@ -568,7 +576,7 @@
             android:layout_marginRight="10dp"
             android:text="年-月-日"
             android:textColor="@color/text_30"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <View
@@ -591,6 +599,6 @@
             android:layout_centerInParent="true"
             android:text="保存"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 </LinearLayout>

@@ -3,6 +3,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/backgroudcolor"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
               android:orientation="vertical"
     >
 
@@ -87,6 +89,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/viewcolor"></View>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40.5dp"
@@ -113,13 +116,15 @@
             android:textColor="@color/text_30"
             android:textSize="15sp"
             />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/viewcolor"
             android:layout_alignParentBottom="true"
+            android:background="@color/viewcolor"
             ></View>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"

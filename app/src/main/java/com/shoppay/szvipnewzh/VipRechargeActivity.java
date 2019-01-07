@@ -91,6 +91,15 @@ public class VipRechargeActivity extends Activity implements View.OnClickListene
                     tv_jifen.setText(info.getMemPoint());
                     tv_dengji.setText(info.getLevelName());
                     mVipTvKamcard.setText(NullUtils.noNullHandle(info.MemCardNumber).toString());
+                    try {
+                        if (isVipcar) {
+                            new ReadCardOptHander().overReadCard();
+                        } else {
+                            new ReadCardOpt().overReadCard();
+                        }
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     PreferenceHelper.write(ac, "shoppay", "memid", info.getMemID());
                     PreferenceHelper.write(ac, "shoppay", "vipcar", et_vipcard.getText().toString());
                     PreferenceHelper.write(ac, "shoppay", "Discount", info.getDiscount());
