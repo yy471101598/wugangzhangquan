@@ -110,7 +110,7 @@ public class ShopXiaofeiLianheDialog {
                 screenWidth - 10, LinearLayout.LayoutParams.WRAP_CONTENT));
         dialog.show();
         tv_yfmoney.setText(StringUtil.twoNum(yfmoney + ""));
-        et_zfmoney.setText(objifen);
+        et_zfmoney.setText(objifen+"");
         et_jifenmoney.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
