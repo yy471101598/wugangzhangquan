@@ -38,6 +38,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.shoppay.wgzq.adapter.LeftAdapter;
+import com.shoppay.wgzq.bean.BalanceHandle;
 import com.shoppay.wgzq.bean.Shop;
 import com.shoppay.wgzq.bean.ShopCar;
 import com.shoppay.wgzq.bean.ShopClass;
@@ -62,6 +63,7 @@ import com.shoppay.wgzq.tools.NoDoubleClickListener;
 import com.shoppay.wgzq.tools.NullUtils;
 import com.shoppay.wgzq.tools.PreferenceHelper;
 import com.shoppay.wgzq.tools.ShopXiaofeiDialog;
+import com.shoppay.wgzq.tools.ShopXiaofeiLianheDialog;
 import com.shoppay.wgzq.tools.StringUtil;
 import com.shoppay.wgzq.tools.ToastUtils;
 import com.shoppay.wgzq.tools.UrlTools;
@@ -94,7 +96,7 @@ public class BalanceActivity extends FragmentActivity implements
     private BalanceFragment myFragment;
     public static int mPosition;
     private RelativeLayout rl_yes, rl_no, rl_card, rl_jiesuan, rl_left, rl_vipname, rl_vipjifen, rl_vipyue, rl_vipdengji;
-    private TextView tv_yes, tv_no, tv_num, tv_money, tv_jifen, tv_title, tv_vipname, tv_vipjifen, tv_vipyue, tv_vipdengji,mVipTvKamcard;
+    private TextView tv_yes, tv_no, tv_num, tv_money, tv_jifen, tv_title, tv_vipname, tv_vipjifen, tv_vipyue, tv_vipdengji, mVipTvKamcard;
     private LinearLayout li_jifen;
     private EditText et_card;
     private String type = "否";
@@ -111,13 +113,15 @@ public class BalanceActivity extends FragmentActivity implements
     private EditText et_shopcode;
     private RelativeLayout rl_right;
     private Boolean isSuccess = false;
+    private VipInfo info;
+    private String password = "";
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    VipInfo info = (VipInfo) msg.obj;
+                    info = (VipInfo) msg.obj;
                     tv_vipname.setText(info.getMemName());
                     tv_vipjifen.setText(info.getMemPoint());
                     tv_vipyue.setText(info.getMemMoney());
@@ -169,6 +173,8 @@ public class BalanceActivity extends FragmentActivity implements
     private TextView tv_tvcard;
     private boolean isVipcar = false;
     private SystemQuanxian sysquanxian;
+    private double paymoney = 0;
+    private BalanceHandle mBalanceHandle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -475,7 +481,7 @@ public class BalanceActivity extends FragmentActivity implements
         rl_jiesuan = (RelativeLayout) findViewById(R.id.balance_rl_jiesan);
         rl_vipyue = (RelativeLayout) findViewById(R.id.balance_rl_vipyue);
         rl_vipdengji = (RelativeLayout) findViewById(R.id.balance_rl_vipdengji);
-        mVipTvKamcard=findViewById(R.id.vip_tv_kamcard);
+        mVipTvKamcard = findViewById(R.id.vip_tv_kamcard);
         li_vip = findViewById(R.id.li_vip);
 
         rl_tvcard = findViewById(R.id.rl_tvcard);
@@ -515,17 +521,55 @@ public class BalanceActivity extends FragmentActivity implements
                                 Toast.makeText(ac, "您选择的是会员结算，请确认会员信息是否正确", Toast.LENGTH_SHORT).show();
                             } else {//会员结算
 //
-                                ShopXiaofeiDialog.jiesuanDialog(app, true, dialog, BalanceActivity.this, 1, "shop", Double.parseDouble(tv_money.getText().toString()), new InterfaceBack() {
+                                ShopXiaofeiLianheDialog.jiesuanDialog(app, true, dialog, BalanceActivity.this, 1, "shop", Double.parseDouble(tv_money.getText().toString()), Integer.parseInt(tv_jifen.getText().toString()), info.Message, new InterfaceBack() {
                                     @Override
                                     public void onResponse(Object response) {
-                                        if (response.toString().equals("wxpay")) {
+                                        mBalanceHandle = (BalanceHandle) response;
+                                        paymoney = mBalanceHandle.paymoney;
+                                        if (mBalanceHandle.type.equals("wxpay")) {
                                             paytype = "wx";
-                                            Intent mipca = new Intent(ac, MipcaActivityCapture.class);
-                                            startActivityForResult(mipca, 333);
-                                        } else if (response.toString().equals("zfbpay")) {
+                                            if (mBalanceHandle.ispassword) {
+                                                DialogUtil.pwdDialog(ac, 1, new InterfaceBack() {
+                                                    @Override
+                                                    public void onResponse(Object response) {
+                                                        password = (String) response;
+                                                        Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                        mipca.putExtra("type", "pay");
+                                                        startActivityForResult(mipca, 333);
+                                                    }
+
+                                                    @Override
+                                                    public void onErrorResponse(Object msg) {
+
+                                                    }
+                                                });
+                                            } else {
+                                                Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                mipca.putExtra("type", "pay");
+                                                startActivityForResult(mipca, 333);
+                                            }
+                                        } else if (mBalanceHandle.type.equals("zfbpay")) {
                                             paytype = "zfb";
-                                            Intent mipca = new Intent(ac, MipcaActivityCapture.class);
-                                            startActivityForResult(mipca, 333);
+                                            if (mBalanceHandle.ispassword) {
+                                                DialogUtil.pwdDialog(ac, 1, new InterfaceBack() {
+                                                    @Override
+                                                    public void onResponse(Object response) {
+                                                        password = (String) response;
+                                                        Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                        mipca.putExtra("type", "pay");
+                                                        startActivityForResult(mipca, 333);
+                                                    }
+
+                                                    @Override
+                                                    public void onErrorResponse(Object msg) {
+
+                                                    }
+                                                });
+                                            } else {
+                                                Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                mipca.putExtra("type", "pay");
+                                                startActivityForResult(mipca, 333);
+                                            }
                                         } else {
                                             finish();
                                         }
@@ -692,7 +736,11 @@ public class BalanceActivity extends FragmentActivity implements
         map.put("ordertype", 7);
         orderAccount = DateUtils.getCurrentTime("yyyyMMddHHmmss");
         map.put("account", orderAccount);
-        map.put("money", tv_money.getText().toString());
+        if (type.equals("否")) {
+            map.put("money", paymoney);
+        } else {
+            map.put("money", tv_money.getText().toString());
+        }
 //        0=现金 1=银联 2=微信 3=支付宝
         switch (paytype) {
             case "wx":
@@ -715,17 +763,17 @@ public class BalanceActivity extends FragmentActivity implements
                     JSONObject jso = new JSONObject(new String(responseBody, "UTF-8"));
                     if (jso.getInt("flag") == 1) {
 
-                        JSONObject jsonObject = (JSONObject) jso.getJSONArray("print").get(0);
-                        DayinUtils.dayin(jsonObject.getString("printContent"));
-                        if (jsonObject.getInt("printNumber") == 0) {
-                        } else {
-                            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                            if (bluetoothAdapter.isEnabled()) {
-                                BluetoothUtil.connectBlueTooth(MyApplication.context);
-                                BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")), jsonObject.getInt("printNumber"));
-                            } else {
-                            }
-                        }
+//                        JSONObject jsonObject = (JSONObject) jso.getJSONArray("print").get(0);
+//                        DayinUtils.dayin(jsonObject.getString("printContent"));
+//                        if (jsonObject.getInt("printNumber") == 0) {
+//                        } else {
+//                            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//                            if (bluetoothAdapter.isEnabled()) {
+//                                BluetoothUtil.connectBlueTooth(MyApplication.context);
+//                                BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")), jsonObject.getInt("printNumber"));
+//                            } else {
+//                            }
+//                        }
                         jiesuan(orderAccount);
                     } else {
                         Toast.makeText(ac, jso.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -771,16 +819,39 @@ public class BalanceActivity extends FragmentActivity implements
         params.put("OrderAccount", orderNum);
         params.put("TotalMoney", yfmoney);
         params.put("DiscountMoney", zfmoney);
-        params.put("OrderPoint", point);
-        switch (paytype) {
-            case "wx":
-                params.put("payType", 2);
-                break;
-            case "zfb":
-                params.put("payType", 3);
-                break;
+        if (type.equals("否")) {
+//        0=现金 1=银联 2=微信 3=支付宝 4=其他支付 5=余额(散客禁用)
+            params.put("UserPwd", password);
+            params.put("PayCard", mBalanceHandle.yuenmoney);//number	余额支付金额
+            params.put("PayCash", mBalanceHandle.xjmoney);//	number	现金支付金额 "
+            params.put("PayBink", mBalanceHandle.yinlianmoney);//	number	银联支付金额
+            if (mBalanceHandle.isAli) {
+                params.put("PayWeChat", 0.0);//	number	微信支付金额
+                params.put("PayAli", paymoney);//	number	支付宝支付金额
+            } else {
+                params.put("PayWeChat", paymoney);//	number	微信支付金额
+                params.put("PayAli", 0.0);//	number	支付宝支付金额
+            }
+            params.put("PayOtherPayment", mBalanceHandle.qitamoney);//	number	其他支付金额
+            if (mBalanceHandle.jifenmoney == 0) {
+                params.put("PointMoney", 0);//	Number	积分抵扣金额
+                params.put("PayPoint", 0);//	Int	积分抵扣数量
+            } else {
+                params.put("PointMoney", mBalanceHandle.jifenmoney);//	Number	积分抵扣金额
+                params.put("PayPoint", (int) Double.parseDouble(CommonUtils.multiply(mBalanceHandle.jifenmoney + "", sysquanxian.jifenbili + "")));//	Int	积分抵扣数量
+            }
+        } else {
+            switch (paytype) {
+                case "wx":
+                    params.put("payType", 2);
+                    break;
+                case "zfb":
+                    params.put("payType", 3);
+                    break;
+            }
+            params.put("UserPwd", "");
         }
-        params.put("UserPwd", "");
+        params.put("OrderPoint", point);
         params.put("GlistCount", shoplist.size());
         LogUtils.d("xxparams", shoplist.size() + "");
         for (int i = 0; i < shoplist.size(); i++) {

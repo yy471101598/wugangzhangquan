@@ -24,7 +24,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.shoppay.wgzq.bean.SystemQuanxian;
-import com.shoppay.wgzq.tools.ActivityStack;
 import com.shoppay.wgzq.tools.BluetoothUtil;
 import com.shoppay.wgzq.tools.CommonUtils;
 import com.shoppay.wgzq.tools.DateUtils;
@@ -56,19 +55,20 @@ public class SanFragment extends Fragment {
     private String orderAccount;
     private SystemQuanxian sysquanxian;
     private MyApplication app;
-//    private MsgReceiver msgReceiver;
-//    private Intent intent;
+    //    private MsgReceiver msgReceiver;
+    private Intent finishintent;
 //    private Dialog weixinDialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sanconsumption, null);
-        app= (MyApplication) getActivity().getApplication();
-        sysquanxian=app.getSysquanxian();
+        app = (MyApplication) getActivity().getApplication();
+        sysquanxian = app.getSysquanxian();
         initView(view);
         dialog = DialogUtil.loadingDialog(getActivity(), 1);
         paydialog = DialogUtil.payloadingDialog(getActivity(), 1);
+        finishintent = new Intent("com.shoppay.wy.fastfinish");
         mRadiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -232,15 +232,15 @@ public class SanFragment extends Fragment {
                         Toast.makeText(getActivity(), jso.getString("msg"), Toast.LENGTH_LONG).show();
                         JSONObject jsonObject = (JSONObject) jso.getJSONArray("print").get(0);
                         if (jsonObject.getInt("printNumber") == 0) {
-                            ActivityStack.create().finishActivity(FastConsumptionActivity.class);
+                            getActivity().sendBroadcast(finishintent);
                         } else {
                             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                             if (bluetoothAdapter.isEnabled()) {
                                 BluetoothUtil.connectBlueTooth(MyApplication.context);
                                 BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")), jsonObject.getInt("printNumber"));
-                                ActivityStack.create().finishActivity(FastConsumptionActivity.class);
+                                getActivity().sendBroadcast(finishintent);
                             } else {
-                                ActivityStack.create().finishActivity(FastConsumptionActivity.class);
+                                getActivity().sendBroadcast(finishintent);
                             }
                         }
 
@@ -355,7 +355,7 @@ public class SanFragment extends Fragment {
         } else {
             map.put("payType", 3);
         }
-        client.setTimeout(120*1000);
+        client.setTimeout(120 * 1000);
         LogUtils.d("xxparams", map.toString());
         String url = UrlTools.obtainUrl(getActivity(), "?Source=3", "PayOnLine");
         LogUtils.d("xxurl", url);

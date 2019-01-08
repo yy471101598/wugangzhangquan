@@ -35,7 +35,6 @@ import com.shoppay.wgzq.bean.VipInfoMsg;
 import com.shoppay.wgzq.card.ReadCardOpt;
 import com.shoppay.wgzq.card.ReadCardOptHander;
 import com.shoppay.wgzq.http.InterfaceBack;
-import com.shoppay.wgzq.tools.ActivityStack;
 import com.shoppay.wgzq.tools.BluetoothUtil;
 import com.shoppay.wgzq.tools.CommonUtils;
 import com.shoppay.wgzq.tools.DateUtils;
@@ -137,7 +136,7 @@ public class VipNewFragment extends Fragment {
     private String orderAccount;
     private SystemQuanxian sysquanxian;
     private MyApplication app;
-    //    private Intent intent;
+        private Intent finishintent;
 //    private Dialog weixinDialog;
 
     @Nullable
@@ -154,7 +153,7 @@ public class VipNewFragment extends Fragment {
         PreferenceHelper.write(MyApplication.context, "shoppay", "jifenpercent", "123");
         PreferenceHelper.write(MyApplication.context, "shoppay", "viptoast", "未查询到会员");
 
-
+        finishintent=new Intent("com.shoppay.wy.fastfinish");
         // 注册广播
         msgReceiver = new MsgReceiver();
         IntentFilter iiiff = new IntentFilter();
@@ -426,7 +425,7 @@ public class VipNewFragment extends Fragment {
         if (sysquanxian.isxianjin == 0) {
             rb_money.setVisibility(View.GONE);
         }
-        if (sysquanxian.isqita == 0) {
+        if (NullUtils.noNullHandle(sysquanxian.isqita).toString().equals("0")) {
             rb_qita.setVisibility(View.GONE);
         }
         if (sysquanxian.isyue == 0) {
@@ -466,9 +465,28 @@ public class VipNewFragment extends Fragment {
                         double yinlianh = CommonUtils.del(xjh, et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString()));
                         paymoney = CommonUtils.del(yinlianh, et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString()));
                         if (paymoney > 0) {
-                            Intent mipca = new Intent(getActivity(), MipcaActivityCapture.class);
-                            mipca.putExtra("type", "pay");
-                            startActivityForResult(mipca, 222);
+                            isAli = false;
+                            isWx = true;
+                            if (!et_yuemoney.getText().toString().equals("") && sysquanxian.ispassword == 1) {
+                                DialogUtil.pwdDialog(getActivity(), 1, new InterfaceBack() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        password = (String) response;
+                                        Intent mipca = new Intent(getActivity(), MipcaActivityCapture.class);
+                                        mipca.putExtra("type", "pay");
+                                        startActivityForResult(mipca, 222);
+                                    }
+
+                                    @Override
+                                    public void onErrorResponse(Object msg) {
+
+                                    }
+                                });
+                            } else {
+                                Intent mipca = new Intent(getActivity(), MipcaActivityCapture.class);
+                                mipca.putExtra("type", "pay");
+                                startActivityForResult(mipca, 222);
+                            }
                         } else {
                             ToastUtils.showToast(getActivity(), "大于折后金额，请检查输入信息");
                         }
@@ -509,10 +527,29 @@ public class VipNewFragment extends Fragment {
                         double xjh = CommonUtils.del(yueh, et_xjmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_xjmoney.getText().toString()));
                         double yinlianh = CommonUtils.del(xjh, et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString()));
                         paymoney = CommonUtils.del(yinlianh, et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString()));
-                        if (paymoney >= 0) {
-                            Intent mipca = new Intent(getActivity(), MipcaActivityCapture.class);
-                            mipca.putExtra("type", "pay");
-                            startActivityForResult(mipca, 222);
+                        if (paymoney > 0) {
+                            isAli = true;
+                            isWx = false;
+                            if (!et_yuemoney.getText().toString().equals("") && sysquanxian.ispassword == 1) {
+                                DialogUtil.pwdDialog(getActivity(), 1, new InterfaceBack() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        password = (String) response;
+                                        Intent mipca = new Intent(getActivity(), MipcaActivityCapture.class);
+                                        mipca.putExtra("type", "pay");
+                                        startActivityForResult(mipca, 222);
+                                    }
+
+                                    @Override
+                                    public void onErrorResponse(Object msg) {
+
+                                    }
+                                });
+                            } else {
+                                Intent mipca = new Intent(getActivity(), MipcaActivityCapture.class);
+                                mipca.putExtra("type", "pay");
+                                startActivityForResult(mipca, 222);
+                            }
                         } else {
                             ToastUtils.showToast(getActivity(), "大于折后金额，请检查输入信息");
                         }
@@ -547,6 +584,9 @@ public class VipNewFragment extends Fragment {
                         double yinlianh = CommonUtils.del(xjh, et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString()));
                         double qitah = CommonUtils.del(yinlianh, et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString()));
                         if (qitah == 0) {
+                            isWx = false;
+                            isAli = false;
+                            paymoney = 0.0;
                             if (!et_yuemoney.getText().toString().equals("") && sysquanxian.ispassword == 1) {
                                 DialogUtil.pwdDialog(getActivity(), 1, new InterfaceBack() {
                                     @Override
@@ -591,6 +631,25 @@ public class VipNewFragment extends Fragment {
         params.put("DiscountMoney", tv_zhmoney.getText().toString());
 //        0=现金 1=银联 2=微信 3=支付宝 4=其他支付 5=余额(散客禁用)
         params.put("UserPwd", password);
+        params.put("PayCard", et_yuemoney.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_yuemoney.getText().toString()));//number	余额支付金额
+        params.put("PayCash", et_xjmoney.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_xjmoney.getText().toString()));//	number	现金支付金额 "
+        params.put("PayBink", et_yinlianmoney.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_yinlianmoney.getText().toString()));//	number	银联支付金额
+        if (isAli) {
+            params.put("PayWeChat", 0.0);//	number	微信支付金额
+            params.put("PayAli", paymoney);//	number	支付宝支付金额
+        } else {
+            params.put("PayWeChat", paymoney);//	number	微信支付金额
+            params.put("PayAli", 0.0);//	number	支付宝支付金额
+        }
+        params.put("PayOtherPayment", et_qitamongy.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_qitamongy.getText().toString()));//	number	其他支付金额
+        if (et_jifenmoney.getText().toString().equals("")) {
+            params.put("PointMoney", 0);//	Number	积分抵扣金额
+            params.put("PayPoint", 0);//	Int	积分抵扣数量
+        } else {
+            params.put("PointMoney", et_jifenmoney.getText().toString());//	Number	积分抵扣金额
+            params.put("PayPoint", (int) Double.parseDouble(CommonUtils.multiply(et_jifenmoney.getText().toString(), sysquanxian.jifenbili + "")));//	Int	积分抵扣数量
+        }
+
         LogUtils.d("xxparams", params.toString());
         String url = UrlTools.obtainUrl(getActivity(), "?Source=3", "QuickExpense");
         LogUtils.d("xxurl", url);
@@ -606,15 +665,15 @@ public class VipNewFragment extends Fragment {
                         Toast.makeText(getActivity(), jso.getString("msg"), Toast.LENGTH_LONG).show();
                         JSONObject jsonObject = (JSONObject) jso.getJSONArray("print").get(0);
                         if (jsonObject.getInt("printNumber") == 0) {
-                            ActivityStack.create().finishActivity(FastConsumptionActivity.class);
+                            getActivity().sendBroadcast(finishintent);
                         } else {
                             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                             if (bluetoothAdapter.isEnabled()) {
                                 BluetoothUtil.connectBlueTooth(MyApplication.context);
                                 BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")), jsonObject.getInt("printNumber"));
-                                ActivityStack.create().finishActivity(FastConsumptionActivity.class);
+                                getActivity().sendBroadcast(finishintent);
                             } else {
-                                ActivityStack.create().finishActivity(FastConsumptionActivity.class);
+                                getActivity().sendBroadcast(finishintent);
                             }
                         }
 
@@ -684,7 +743,7 @@ public class VipNewFragment extends Fragment {
         map.put("ordertype", 9);
         orderAccount = DateUtils.getCurrentTime("yyyyMMddHHmmss");
         map.put("account", orderAccount);
-        map.put("money", tv_zhmoney.getText().toString());
+        map.put("money", paymoney);
 //        0=现金 1=银联 2=微信 3=支付宝
         if (isWx) {
             map.put("payType", 2);
