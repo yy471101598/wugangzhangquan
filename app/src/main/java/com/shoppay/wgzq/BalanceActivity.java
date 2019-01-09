@@ -521,65 +521,133 @@ public class BalanceActivity extends FragmentActivity implements
                                 Toast.makeText(ac, "您选择的是会员结算，请确认会员信息是否正确", Toast.LENGTH_SHORT).show();
                             } else {//会员结算
 //
-                                ShopXiaofeiLianheDialog.jiesuanDialog(app, true, dialog, BalanceActivity.this, 1, "shop", Double.parseDouble(tv_money.getText().toString()), Integer.parseInt(tv_jifen.getText().toString()), info.Message, new InterfaceBack() {
-                                    @Override
-                                    public void onResponse(Object response) {
-                                        mBalanceHandle = (BalanceHandle) response;
-                                        paymoney = mBalanceHandle.paymoney;
-                                        if (mBalanceHandle.type.equals("wxpay")) {
-                                            paytype = "wx";
-                                            if (mBalanceHandle.ispassword) {
-                                                DialogUtil.pwdDialog(ac, 1, new InterfaceBack() {
-                                                    @Override
-                                                    public void onResponse(Object response) {
-                                                        password = (String) response;
-                                                        Intent mipca = new Intent(ac, MipcaActivityCapture.class);
-                                                        mipca.putExtra("type", "pay");
-                                                        startActivityForResult(mipca, 333);
-                                                    }
+                                if (info.IsShopPoint.equals("1")) {
+                                    ShopXiaofeiLianheDialog.jiesuanDialog(app, true, dialog, BalanceActivity.this, 1, "shop", Double.parseDouble(tv_money.getText().toString()), Integer.parseInt(tv_jifen.getText().toString()), info.Message, new InterfaceBack() {
+                                        @Override
+                                        public void onResponse(Object response) {
+                                            mBalanceHandle = (BalanceHandle) response;
+                                            paymoney = mBalanceHandle.paymoney;
+                                            if (mBalanceHandle.type.equals("wxpay")) {
+                                                paytype = "wx";
+                                                if (mBalanceHandle.ispassword) {
+                                                    DialogUtil.pwdDialog(ac, 1, new InterfaceBack() {
+                                                        @Override
+                                                        public void onResponse(Object response) {
+                                                            password = (String) response;
+                                                            Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                            mipca.putExtra("type", "pay");
+                                                            startActivityForResult(mipca, 333);
+                                                        }
 
-                                                    @Override
-                                                    public void onErrorResponse(Object msg) {
+                                                        @Override
+                                                        public void onErrorResponse(Object msg) {
 
-                                                    }
-                                                });
+                                                        }
+                                                    });
+                                                } else {
+                                                    Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                    mipca.putExtra("type", "pay");
+                                                    startActivityForResult(mipca, 333);
+                                                }
+                                            } else if (mBalanceHandle.type.equals("zfbpay")) {
+                                                paytype = "zfb";
+                                                if (mBalanceHandle.ispassword) {
+                                                    DialogUtil.pwdDialog(ac, 1, new InterfaceBack() {
+                                                        @Override
+                                                        public void onResponse(Object response) {
+                                                            password = (String) response;
+                                                            Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                            mipca.putExtra("type", "pay");
+                                                            startActivityForResult(mipca, 333);
+                                                        }
+
+                                                        @Override
+                                                        public void onErrorResponse(Object msg) {
+
+                                                        }
+                                                    });
+                                                } else {
+                                                    Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                    mipca.putExtra("type", "pay");
+                                                    startActivityForResult(mipca, 333);
+                                                }
                                             } else {
-                                                Intent mipca = new Intent(ac, MipcaActivityCapture.class);
-                                                mipca.putExtra("type", "pay");
-                                                startActivityForResult(mipca, 333);
+                                                finish();
                                             }
-                                        } else if (mBalanceHandle.type.equals("zfbpay")) {
-                                            paytype = "zfb";
-                                            if (mBalanceHandle.ispassword) {
-                                                DialogUtil.pwdDialog(ac, 1, new InterfaceBack() {
-                                                    @Override
-                                                    public void onResponse(Object response) {
-                                                        password = (String) response;
-                                                        Intent mipca = new Intent(ac, MipcaActivityCapture.class);
-                                                        mipca.putExtra("type", "pay");
-                                                        startActivityForResult(mipca, 333);
-                                                    }
-
-                                                    @Override
-                                                    public void onErrorResponse(Object msg) {
-
-                                                    }
-                                                });
-                                            } else {
-                                                Intent mipca = new Intent(ac, MipcaActivityCapture.class);
-                                                mipca.putExtra("type", "pay");
-                                                startActivityForResult(mipca, 333);
-                                            }
-                                        } else {
-                                            finish();
                                         }
-                                    }
 
-                                    @Override
-                                    public void onErrorResponse(Object msg) {
+                                        @Override
+                                        public void onErrorResponse(Object msg) {
 
+                                        }
+                                    });
+                                } else {
+                                    //判断商家积分是否够扣减
+                                    if (Double.parseDouble(tv_jifen.getText().toString()) > Double.parseDouble(info.ShopPoint)) {
+                                        Toast.makeText(MyApplication.context, "当前店铺积分不足本次扣减",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        ShopXiaofeiLianheDialog.jiesuanDialog(app, true, dialog, BalanceActivity.this, 1, "shop", Double.parseDouble(tv_money.getText().toString()), Integer.parseInt(tv_jifen.getText().toString()), info.Message, new InterfaceBack() {
+                                            @Override
+                                            public void onResponse(Object response) {
+                                                mBalanceHandle = (BalanceHandle) response;
+                                                paymoney = mBalanceHandle.paymoney;
+                                                if (mBalanceHandle.type.equals("wxpay")) {
+                                                    paytype = "wx";
+                                                    if (mBalanceHandle.ispassword) {
+                                                        DialogUtil.pwdDialog(ac, 1, new InterfaceBack() {
+                                                            @Override
+                                                            public void onResponse(Object response) {
+                                                                password = (String) response;
+                                                                Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                                mipca.putExtra("type", "pay");
+                                                                startActivityForResult(mipca, 333);
+                                                            }
+
+                                                            @Override
+                                                            public void onErrorResponse(Object msg) {
+
+                                                            }
+                                                        });
+                                                    } else {
+                                                        Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                        mipca.putExtra("type", "pay");
+                                                        startActivityForResult(mipca, 333);
+                                                    }
+                                                } else if (mBalanceHandle.type.equals("zfbpay")) {
+                                                    paytype = "zfb";
+                                                    if (mBalanceHandle.ispassword) {
+                                                        DialogUtil.pwdDialog(ac, 1, new InterfaceBack() {
+                                                            @Override
+                                                            public void onResponse(Object response) {
+                                                                password = (String) response;
+                                                                Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                                mipca.putExtra("type", "pay");
+                                                                startActivityForResult(mipca, 333);
+                                                            }
+
+                                                            @Override
+                                                            public void onErrorResponse(Object msg) {
+
+                                                            }
+                                                        });
+                                                    } else {
+                                                        Intent mipca = new Intent(ac, MipcaActivityCapture.class);
+                                                        mipca.putExtra("type", "pay");
+                                                        startActivityForResult(mipca, 333);
+                                                    }
+                                                } else {
+                                                    finish();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onErrorResponse(Object msg) {
+
+                                            }
+                                        });
                                     }
-                                });
+                                }
                             }
                         } else {//散客结算
                             ShopXiaofeiDialog.jiesuanDialog(app, false, dialog, BalanceActivity.this, 1, "shop", Double.parseDouble(tv_money.getText().toString()), new InterfaceBack() {

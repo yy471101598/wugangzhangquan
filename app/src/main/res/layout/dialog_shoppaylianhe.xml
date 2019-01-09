@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/text_30"
-            android:text="应付金额"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:text="应付金额"
+            android:textColor="@color/text_30"
+            android:textSize="15sp"
             />
+
         <TextView
             android:id="@+id/shoppay_tv_yfmoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
+            android:text="0.00"
             android:textColor="@color/text_30"
             android:textSize="15sp"
-            android:text="0.00"
             />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -70,8 +74,8 @@
                 android:layout_toRightOf="@id/tv_kjm"
                 android:background="@null"
                 android:gravity="center_vertical|right"
-                android:inputType="numberDecimal"
                 android:hint="请输入积分抵用金额"
+                android:inputType="numberDecimal"
                 android:textColor="@color/text_30"
                 android:textColorHint="@color/text_66"
                 android:textSize="15sp"
@@ -325,6 +329,7 @@
             android:background="@color/viewcolor"></View>
     </RelativeLayout>
 
+
     <RelativeLayout
         android:id="@+id/rl_wxpay"
         android:layout_width="match_parent"
@@ -333,6 +338,7 @@
 
 
         <TextView
+            android:id="@+id/tv_wx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -341,37 +347,47 @@
             android:textColor="@color/text_30"
             android:textSize="15sp"/>
 
-        <LinearLayout
+
+        <RelativeLayout
+            android:id="@+id/rl_wxpaysao"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@color/theme_red"
+            >
 
-
-            <RelativeLayout
-                android:id="@+id/rl_wxpaysao"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/theme_red"
-                >
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="3dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="3dp"
+                android:text="扫码"
+                android:textColor="@color/white"
+                android:textSize="13sp"/>
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="3dp"
-                    android:text="扫码"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"/>
-            </RelativeLayout>
-        </LinearLayout>
+        <EditText
+            android:id="@+id/vip_et_wxmoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/rl_wxpaysao"
+            android:layout_toRightOf="@id/tv_wx"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入微信支付金额"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/text_30"
+            android:textColorHint="@color/text_66"
+            android:textSize="15sp"
+            />
 
         <View
             android:layout_width="match_parent"
@@ -390,6 +406,7 @@
 
 
         <TextView
+            android:id="@+id/tv_ali"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -398,36 +415,46 @@
             android:textColor="@color/text_30"
             android:textSize="15sp"/>
 
-        <LinearLayout
+
+        <RelativeLayout
+            android:id="@+id/rl_alipaysao"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@color/theme_red"
+            >
 
-
-            <RelativeLayout
-                android:id="@+id/rl_alipaysao"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/theme_red"
-                >
+                android:layout_centerInParent="true"
+                android:paddingLeft="8dp"
+                android:paddingTop="3dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="3dp"
+                android:text="扫码"
+                android:textColor="@color/white"
+                android:textSize="13sp"/>
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="3dp"
-                    android:text="扫码"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"/>
-            </RelativeLayout>
-        </LinearLayout>
+        <EditText
+            android:id="@+id/vip_et_alimoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/rl_alipaysao"
+            android:layout_toRightOf="@id/tv_ali"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入支付宝付金额"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/text_30"
+            android:textColorHint="@color/text_66"
+            android:textSize="15sp"
+            />
 
         <View
             android:layout_width="match_parent"
@@ -443,36 +470,40 @@
         android:layout_width="match_parent"
         android:layout_height="40.5dp"
         >
+
         <TextView
             android:id="@+id/shoppay_tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/text_30"
-            android:text="可得积分"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:text="可得积分"
+            android:textColor="@color/text_30"
+            android:textSize="15sp"
             />
+
         <TextView
             android:id="@+id/shoppay_et_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/shoppay_tv_money"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:background="@null"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:inputType="number|numberDecimal"
+            android:layout_toRightOf="@id/shoppay_tv_money"
+            android:background="@null"
             android:gravity="center_vertical|right"
+            android:inputType="number|numberDecimal"
             android:textColor="@color/text_30"
             android:textSize="15sp"
             />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_alignParentBottom="true"
             android:background="@color/viewcolor"></View>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/vip_rl_password"
         android:layout_width="match_parent"
@@ -480,30 +511,33 @@
         android:background="@color/white"
         android:visibility="gone"
         >
+
         <TextView
             android:id="@+id/vip_tv_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/text_30"
-            android:text="会员密码"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:text="会员密码"
+            android:textColor="@color/text_30"
+            android:textSize="15sp"
             />
+
         <EditText
             android:id="@+id/vip_et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/vip_tv_password"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:background="@null"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:textColor="@color/text_30"
+            android:layout_toRightOf="@id/vip_tv_password"
+            android:background="@null"
             android:gravity="center_vertical|right"
-            android:textSize="15sp"
             android:hint="请输入会员密码"
+            android:textColor="@color/text_30"
+            android:textSize="15sp"
             />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -516,20 +550,22 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/kuang_red_red"
-        android:layout_marginTop="30dp"
         >
+
         <TextView
             android:id="@+id/tv_jiesuan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_centerInParent="true"
-            android:textSize="15sp"
             android:text="结算"
+            android:textColor="@color/white"
+            android:textSize="15sp"
             />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="30dp"

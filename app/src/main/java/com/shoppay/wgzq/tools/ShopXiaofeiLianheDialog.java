@@ -47,6 +47,9 @@ public class ShopXiaofeiLianheDialog {
     public static EditText et_xjmoney;
     public static EditText et_yinlianmoney;
     public static EditText et_qitamongy;
+    public static EditText et_wxmoney;
+    public static EditText et_alimoney;
+
     public static double paymoney = 0.0;
     public static boolean isAli = false, isWx = false;
     public static SystemQuanxian sysquanxian;
@@ -68,7 +71,8 @@ public class ShopXiaofeiLianheDialog {
         et_xjmoney = view.findViewById(R.id.vip_et_xjmoney);
         et_yinlianmoney = view.findViewById(R.id.vip_et_yinlianmoney);
         et_qitamongy = view.findViewById(R.id.vip_et_qitamoney);
-
+        et_wxmoney = view.findViewById(R.id.vip_et_wxmoney);
+        et_alimoney = view.findViewById(R.id.vip_et_alimoney);
         final TextView tv_jfbl = view.findViewById(R.id.vip_tv_jfkj);
         final TextView tv_jfmsg = view.findViewById(R.id.vip_tv_jfsm);
         tv_jfmsg.setText(jfmsg);
@@ -110,7 +114,60 @@ public class ShopXiaofeiLianheDialog {
                 screenWidth - 10, LinearLayout.LayoutParams.WRAP_CONTENT));
         dialog.show();
         tv_yfmoney.setText(StringUtil.twoNum(yfmoney + ""));
-        et_zfmoney.setText(objifen+"");
+        et_zfmoney.setText(objifen + "");
+        et_wxmoney.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                    if (sysquanxian.iswxpay == 0) {
+                        double jfh = CommonUtils.del(yfmoney, et_jifenmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_jifenmoney.getText().toString()));
+                        double yueh = CommonUtils.del(jfh, et_yuemoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yuemoney.getText().toString()));
+                        double xjh = CommonUtils.del(yueh, et_xjmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_xjmoney.getText().toString()));
+                        double yinlianh = CommonUtils.del(xjh, et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString()));
+                        double paymoney = CommonUtils.del(yinlianh, et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString()));
+                        if (paymoney > 0) {
+                            et_alimoney.setText("");
+                            et_wxmoney.setText(paymoney + "");
+                        } else {
+                            et_wxmoney.setText("");
+                            ToastUtils.showToast(context, "大于折后金额，请检查输入信息");
+                        }
+                    } else {
+//                        ToastUtils.showToast(getActivity(), "微信支付权限为标记模式");
+                    }
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
+
+        et_alimoney.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    if (sysquanxian.iszfbpay == 0) {
+                        double jfh = CommonUtils.del(yfmoney, et_jifenmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_jifenmoney.getText().toString()));
+                        double yueh = CommonUtils.del(jfh, et_yuemoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yuemoney.getText().toString()));
+                        double xjh = CommonUtils.del(yueh, et_xjmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_xjmoney.getText().toString()));
+                        double yinlianh = CommonUtils.del(xjh, et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString()));
+                        double paymoney = CommonUtils.del(yinlianh, et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString()));
+                        if (paymoney > 0) {
+                            et_wxmoney.setText("");
+                            et_alimoney.setText(paymoney + "");
+                        } else {
+                            et_alimoney.setText("");
+                            ToastUtils.showToast(context, "大于折后金额，请检查输入信息");
+                        }
+                    } else {
+//                        ToastUtils.showToast(getActivity(), "支付宝支付权限为标记模式");
+                    }
+                } else {
+
+                }
+            }
+        });
+
         et_jifenmoney.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -127,9 +184,92 @@ public class ShopXiaofeiLianheDialog {
                 if (editable.toString().equals("")) {
                     tv_jfbl.setText("");
                 } else {
+                    et_wxmoney.setText("");
+                    et_alimoney.setText("");
                     tv_jfbl.setText(editable.toString() + "*" + NullUtils.noNullHandle(sysquanxian.jifenbili).toString());
                 }
 
+            }
+        });
+
+        et_xjmoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals("")) {
+                } else {
+                    et_wxmoney.setText("");
+                    et_alimoney.setText("");
+                }
+            }
+        });
+        et_yuemoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals("")) {
+                } else {
+                    et_wxmoney.setText("");
+                    et_alimoney.setText("");
+                }
+            }
+        });
+        et_yinlianmoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals("")) {
+                } else {
+                    et_wxmoney.setText("");
+                    et_alimoney.setText("");
+                }
+            }
+        });
+        et_qitamongy.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals("")) {
+                } else {
+                    et_wxmoney.setText("");
+                    et_alimoney.setText("");
+                }
             }
         });
         paymoney = 0.0;
@@ -170,6 +310,8 @@ public class ShopXiaofeiLianheDialog {
                         balanceHandle.xjmoney = et_xjmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_xjmoney.getText().toString());
                         balanceHandle.yinlianmoney = et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString());
                         balanceHandle.qitamoney = et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString());
+                        et_alimoney.setText("");
+                        et_wxmoney.setText(paymoney + "");
                         if (!et_yuemoney.getText().toString().equals("") && sysquanxian.ispassword == 1) {
                             balanceHandle.ispassword = true;
                             handler.onResponse(balanceHandle);
@@ -223,6 +365,8 @@ public class ShopXiaofeiLianheDialog {
                         balanceHandle.xjmoney = et_xjmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_xjmoney.getText().toString());
                         balanceHandle.yinlianmoney = et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString());
                         balanceHandle.qitamoney = et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString());
+                        et_alimoney.setText(paymoney + "");
+                        et_wxmoney.setText("");
                         if (!et_yuemoney.getText().toString().equals("") && sysquanxian.ispassword == 1) {
                             balanceHandle.ispassword = true;
                             handler.onResponse(balanceHandle);
@@ -255,33 +399,42 @@ public class ShopXiaofeiLianheDialog {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     if (CommonUtils.checkNet(MyApplication.context)) {
-                        double jfh = CommonUtils.del(yfmoney, et_jifenmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_jifenmoney.getText().toString()));
-                        double yueh = CommonUtils.del(jfh, et_yuemoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yuemoney.getText().toString()));
-                        double xjh = CommonUtils.del(yueh, et_xjmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_xjmoney.getText().toString()));
-                        double yinlianh = CommonUtils.del(xjh, et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString()));
-                        double qitah = CommonUtils.del(yinlianh, et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString()));
-                        if (qitah == 0) {
-                            isWx = false;
-                            isAli = false;
-                            paymoney = 0.0;
-                            if (!et_yuemoney.getText().toString().equals("") && sysquanxian.ispassword == 1) {
-                                DialogUtil.pwdDialog(context, 1, new InterfaceBack() {
-                                    @Override
-                                    public void onResponse(Object response) {
-                                        jiesuan(loading, type, handler, dialog, context, response.toString(), DateUtils.getCurrentTime("yyyyMMddHHmmss"));
-                                    }
+                        if (sysquanxian.iszfbpay == 0 && !et_alimoney.getText().toString().equals("")) {
+                            ToastUtils.showToast(MyApplication.context,"支付宝付非标记模式，必须扫码支付");
+                        } else if (sysquanxian.iszfbpay == 0 && !et_alimoney.getText().toString().equals("")) {
+                            ToastUtils.showToast(MyApplication.context,"微信支付非标记模式，必须扫码支付");
 
-                                    @Override
-                                    public void onErrorResponse(Object msg) {
+                        }else {
+                            double jfh = CommonUtils.del(yfmoney, et_jifenmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_jifenmoney.getText().toString()));
+                            double yueh = CommonUtils.del(jfh, et_yuemoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yuemoney.getText().toString()));
+                            double xjh = CommonUtils.del(yueh, et_xjmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_xjmoney.getText().toString()));
+                            double yinlianh = CommonUtils.del(xjh, et_yinlianmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_yinlianmoney.getText().toString()));
+                            double qitah = CommonUtils.del(yinlianh, et_qitamongy.getText().toString().equals("") ? 0 : Double.parseDouble(et_qitamongy.getText().toString()));
+                            double wxh = CommonUtils.del(qitah, et_wxmoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_wxmoney.getText().toString()));
+                            double alih = CommonUtils.del(wxh, et_alimoney.getText().toString().equals("") ? 0 : Double.parseDouble(et_alimoney.getText().toString()));
+                            if (alih == 0) {
+                                isWx = false;
+                                isAli = false;
+                                paymoney = 0.0;
+                                if (!et_yuemoney.getText().toString().equals("") && sysquanxian.ispassword == 1) {
+                                    DialogUtil.pwdDialog(context, 1, new InterfaceBack() {
+                                        @Override
+                                        public void onResponse(Object response) {
+                                            jiesuan(loading, type, handler, dialog, context, response.toString(), DateUtils.getCurrentTime("yyyyMMddHHmmss"));
+                                        }
 
-                                    }
-                                });
+                                        @Override
+                                        public void onErrorResponse(Object msg) {
+
+                                        }
+                                    });
+                                } else {
+                                    jiesuan(loading, type, handler, dialog, context, "", DateUtils.getCurrentTime("yyyyMMddHHmmss"));
+                                }
                             } else {
-                                jiesuan(loading, type, handler, dialog, context, "", DateUtils.getCurrentTime("yyyyMMddHHmmss"));
+                                Toast.makeText(MyApplication.context, "输入金额不等于折后金额",
+                                        Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(MyApplication.context, "输入金额不等于折后金额",
-                                    Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(MyApplication.context, "请检查网络是否可用",
@@ -357,13 +510,8 @@ public class ShopXiaofeiLianheDialog {
         params.put("PayCard", et_yuemoney.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_yuemoney.getText().toString()));//number	余额支付金额
         params.put("PayCash", et_xjmoney.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_xjmoney.getText().toString()));//	number	现金支付金额 "
         params.put("PayBink", et_yinlianmoney.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_yinlianmoney.getText().toString()));//	number	银联支付金额
-        if (isAli) {
-            params.put("PayWeChat", 0.0);//	number	微信支付金额
-            params.put("PayAli", paymoney);//	number	支付宝支付金额
-        } else {
-            params.put("PayWeChat", paymoney);//	number	微信支付金额
-            params.put("PayAli", 0.0);//	number	支付宝支付金额
-        }
+        params.put("PayWeChat", et_wxmoney.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_wxmoney.getText().toString()));//	number	微信支付金额
+        params.put("PayAli", et_alimoney.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_alimoney.getText().toString()));//	number	支付宝支付金额
         params.put("PayOtherPayment", et_qitamongy.getText().toString().equals("") ? 0.0 : Double.parseDouble(et_qitamongy.getText().toString()));//	number	其他支付金额
         if (et_jifenmoney.getText().toString().equals("")) {
             params.put("PointMoney", 0);//	Number	积分抵扣金额

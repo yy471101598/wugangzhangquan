@@ -43,6 +43,8 @@ public  class VipInfo {
     private String ShopName;
     public String MemCardNumber;
     public String Message;
+    public String ShopPoint;//":"0","
+    public String IsShopPoint;//":"1"  为0时，需要判断ShopPoint必须大于当前可得积分
     public String getMemID() {
         return MemID;
     }
