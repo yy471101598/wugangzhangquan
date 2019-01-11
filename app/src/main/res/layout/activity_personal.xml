@@ -27,7 +27,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/viewcolor"
         ></View>
     <LinearLayout
@@ -48,7 +48,7 @@
             android:text="登录账号"
             />
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/viewcolor"
             ></View>
@@ -66,7 +66,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/viewcolor"
         ></View>
     <LinearLayout
@@ -87,7 +87,7 @@
             android:text="用户名称"
             />
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/viewcolor"
             ></View>
@@ -105,7 +105,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/viewcolor"
         ></View>
     <LinearLayout
@@ -126,7 +126,7 @@
             android:text="管理权限"
             />
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/viewcolor"
             ></View>
@@ -144,7 +144,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/viewcolor"
         ></View>
     <LinearLayout
@@ -165,7 +165,7 @@
             android:text="所属店铺"
             />
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/viewcolor"
             ></View>
@@ -183,7 +183,46 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
+        android:background="@color/viewcolor"
+        ></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_30"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:text="商家积分"
+            />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/viewcolor"
+            ></View>
+        <TextView
+            android:id="@+id/tv_jifen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_30"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text=""
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
         android:background="@color/viewcolor"
         ></View>
     <LinearLayout
@@ -204,7 +243,7 @@
             android:text="联系电话"
             />
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/viewcolor"
             ></View>
@@ -222,7 +261,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/viewcolor"
         ></View>
     <LinearLayout
@@ -243,7 +282,7 @@
             android:text="创建时间"
             />
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/viewcolor"
             ></View>
@@ -261,7 +300,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/viewcolor"
         ></View>
     <LinearLayout
@@ -282,7 +321,7 @@
             android:text="最后登录"
             />
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/viewcolor"
             ></View>
@@ -300,7 +339,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/viewcolor"
         ></View>
     <LinearLayout
@@ -321,7 +360,7 @@
             android:text="当前版本"
             />
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/viewcolor"
             ></View>

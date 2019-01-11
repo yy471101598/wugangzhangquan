@@ -21,7 +21,7 @@ public class Personal {
     private String UserPhone;
     private String UserCreateTime;
     private String lastlogin;
-
+    public String ShopPoint;
     public String getUserGroupName() {
         return UserGroupName;
     }

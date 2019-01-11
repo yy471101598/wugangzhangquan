@@ -22,6 +22,7 @@ import com.shoppay.wgzq.tools.DateUtils;
 import com.shoppay.wgzq.tools.DayinUtils;
 import com.shoppay.wgzq.tools.DialogUtil;
 import com.shoppay.wgzq.tools.LogUtils;
+import com.shoppay.wgzq.tools.NullUtils;
 import com.shoppay.wgzq.tools.PreferenceHelper;
 import com.shoppay.wgzq.tools.UrlTools;
 
@@ -64,6 +65,8 @@ public class PersonalActivity extends Activity {
     TextView mTvLastlogin;
     @Bind(R.id.tv_version)
     TextView tv_version;
+    @Bind(R.id.tv_jifen)
+    TextView mTvJifen;
     private Activity ac;
     private Dialog dialog;
 
@@ -80,18 +83,18 @@ public class PersonalActivity extends Activity {
     }
 
 
-    private void obtainPersonal(){
+    private void obtainPersonal() {
         dialog.show();
         AsyncHttpClient client = new AsyncHttpClient();
         final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
         client.setCookieStore(myCookieStore);
         RequestParams map = new RequestParams();
-        map.put("MemID",  PreferenceHelper.readString(ac,"shoppay","memid",""));
+        map.put("MemID", PreferenceHelper.readString(ac, "shoppay", "memid", ""));
         map.put("rechargeAccount", DateUtils.getCurrentTime("yyyyMMddHHmmss"));
 
-        LogUtils.d("xxparams",map.toString());
-        String url= UrlTools.obtainUrl(ac,"?Source=3","GetUserInfo");
-        LogUtils.d("xxurl",url);
+        LogUtils.d("xxparams", map.toString());
+        String url = UrlTools.obtainUrl(ac, "?Source=3", "GetUserInfo");
+        LogUtils.d("xxurl", url);
         client.post(url, map, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -99,22 +102,23 @@ public class PersonalActivity extends Activity {
                     dialog.dismiss();
                     LogUtils.d("xxviprechargeS", new String(responseBody, "UTF-8"));
                     JSONObject jso = new JSONObject(new String(responseBody, "UTF-8"));
-                    if(jso.getInt("flag")==1){
-                        Gson gson=new Gson();
+                    if (jso.getInt("flag") == 1) {
+                        Gson gson = new Gson();
 //                        Toast.makeText(ac, jso.getString("msg"), Toast.LENGTH_LONG).show();
-                        Type listType = new TypeToken<List<Personal>>(){}.getType();
-                       List<Personal> listperson = gson.fromJson(jso.getString("vdata"), listType);
+                        Type listType = new TypeToken<List<Personal>>() {
+                        }.getType();
+                        List<Personal> listperson = gson.fromJson(jso.getString("vdata"), listType);
                         handleMsg(listperson.get(0));
 
 
-                        JSONObject jsonObject=(JSONObject) jso.getJSONArray("print").get(0);
-                        if(jsonObject.getInt("printNumber")==0){
-                        }else{
-                            BluetoothAdapter bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
-                            if(bluetoothAdapter.isEnabled()) {
+                        JSONObject jsonObject = (JSONObject) jso.getJSONArray("print").get(0);
+                        if (jsonObject.getInt("printNumber") == 0) {
+                        } else {
+                            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                            if (bluetoothAdapter.isEnabled()) {
                                 BluetoothUtil.connectBlueTooth(MyApplication.context);
-                                BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")),jsonObject.getInt("printNumber"));
-                            }else {
+                                BluetoothUtil.sendData(DayinUtils.dayin(jsonObject.getString("printContent")), jsonObject.getInt("printNumber"));
+                            } else {
                             }
                         }
                     } else {
@@ -144,6 +148,7 @@ public class PersonalActivity extends Activity {
         mTvPhone.setText(personal.getUserPhone());
         mTvCreatetime.setText(personal.getUserCreateTime());
         mTvLastlogin.setText(personal.getLastlogin());
+        mTvJifen.setText(NullUtils.noNullHandle(personal.ShopPoint).toString());
     }
 
     @OnClick(R.id.rl_left)
